@@ -1,0 +1,15 @@
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Data Validation
+pydantic==2.5.0
+
+# HTTP Client for testing
+requests==2.31.0
+
+# Standard library modules (no installation needed)
+# json - built-in
+# subprocess - built-in
+# datetime - built-in
+# typing - built-in
