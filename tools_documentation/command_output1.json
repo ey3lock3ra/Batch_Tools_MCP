@@ -1,0 +1,66 @@
+{
+  "dslist": {
+    "rc": 1,
+    "out": "usage:\ndslist options dataset-patterns\nlist datasets matching dataset patterns\ndataset-patterns: one or more dataset names with or without * as wildcards\noptions:\n  -s  short output: only dataset names are listed\n  -c  print dataset list (instead of less)\n  -m  print managementclass (only with MFCatlst Version >= 2.0) \n  -z  search pattern/result like on z/Os (only with MFCatlst Version >= 2.0) \n  -f  print size and date ( stat -c '%s %y %n')\nexamples:\ndslist adivz.dr*.vpz*.#20131216 ANA2.XY\ndslist -s adivz.*.#20131216*\ndslist ?prod.variable\n"
+  },
+  "mfbr": {
+    "rc": 1,
+    "out": "usage:\nmfbr dsname\nopens Hybrid Editor xe for browsing dataset\nParameters:\n  dsname: dataset name\n\nexample:\nmfbr ADIVZ.*\nmfbr GRU33.QUELL.CLIST\nmfbr\n"
+  },
+  "mfcat": {
+    "rc": 0,
+    "out": "Usage: mfcat [ -b ] Datasets\nConcatenate MicroFocus Dataset(s) to standard output.\n\n  -b    binary mode (don't add linefeed to records)\n  Datasets: one or more dataset specifications using * as wildcards\ne.g.\n  mfcat ADIVZ.DRES.VPZJJPA.#140121 ADIVZ.DRES.VPZJOST.#140121\n  mfcat 'ADIVZ.DRES.VPZ*.#1401*' 'ADIVZ.DRFEHL.VPZ*.#1401*'\n"
+  },
+  "mfcopy": {
+    "rc": 1,
+    "out": "mfcopy\n\nCopy Microfocus-Dataset\n\nCall\n\n  mfcopy <-r> <-m New_mgmtclass>\n\nParameter\n\n  Name          Description\n  ------------- -----------------------------------------------\n  MF-DATASET1   Source dataset.\n  MF-DATASET2   Target dataset. This will be the new dataset.\n\nOptional Parameter\n\n  Name   Description\n  ------ ---------------------------------------------------------------------------------\n  -r     Replace-Mode when target dataset already exists it will get deleted.\n  -m     Type -m <New_mgmtclass> to set the copied dataset with the given New_mgmtclass.\n\nExample/s\n\n  mfcopy U7.A0000.TEST U7.A0000.NEWDATA\n  mfcopy -r U7.A0000.TEST U7.A0000.NEWDATA\n  mfcopy -m L0842600 U7.A0000.TEST U7.A0000.NEWDATA\n"
+  },
+  "mfdelete": {
+    "rc": 1,
+    "out": "usage:\nmfdelete options dsname-patterns \ndeletes  microfocus datasets\nParameters\n  dsname-patterns: one or more dataset names optionally with wildcards (*)\n  -i interactive mode - lists datasets and requests confirmation before delete\nenvironmentvariable ES_SERVER must be set (automatically set in jobs). e.g export ES_SERVER=AE01\n\nexample:\nmfdelete ADIVZ.DRES.VPZJJPA.GESAMT\nmfdelete -i 'ADIZJ.DR*.#120608.* ADIZJ.DR*.#120609.*'\n"
+  },
+  "mfdsutil": {
+    "rc": 1,
+    "out": "Usage:\n  mfdsutil [ -u <unixfilename> ] [ options ] mffile\n  Convert data to/from MicroFocus Dataset Format\n  -u unixfilename  name of unix file from/to which data are converted\n  if no -u unixfilename is specified stdin or stdout is used\n  options:\n    -r | --read        read from MicroFocus file and write to unixfile\n    -w | --write       read from unixfile and write to MicroFocus File\n    -b | --binary      binary format data is transferred without modification\n                        (no linefeed added or removed)\n    -x | --hex         hex format - every record is converted into one line\n                       containing the data in hex format or vice versa\n    -t | --text        text format - every record is converted to one line\n                       with linefeed or vice versa\n    -i | --text-invertible\n                       invertible text format, same as --text except that\n                       - during conversion from MicfoFocus format to unix format\n                         every linefeed within a record is replaced by vertical tab\n                         and every vertical tab within a record is replaced by formfeed + vertical tab\n                         and every formfeed within a record is replaced by two formfeeds\n                       - during conversion from unix format to MicfoFocus format\n                         the reverse procedure is applied\n                       this ensures that the original MicroFocus dataset can be rebuilt\n                       from a unix text file created by mfdsutil\n    -l | --lengthpref  length delimited - every record is converted to a\n                       length+data sequence or vice versa. \n                       Length is a 4 byte word of which the first two bytes contain\n                       the record length in big endian format, and the last two\n                       bytes contain 00\n                       This is the same format you get, when you transfer\n                       a VB dataset with quote site rdw from a mainframe using ftp. \n    -z | --zosundef    like --lengthpref, but with additional block descritor word.\n                       It contains a sequence of blocklength + record e length + data entries\n                       This is the same format you get, when you convert a\n                       dataset from RECFM=VB to RECFM=U on the mainframe \n                       and transfer it in binary mode to linux using ftp\n    -k | --keeptrailbl keep trailing blanks when converting fixed blocked\n                       datasets (only with -r)\n    -c | --truncate    truncate lines which exceed record length (only with -w)\n    -a | --wraparound  wrap around lines which exceed record length (only with -w)\n    -v len| --var len  Record Format VB with record length len\n    -f len| --fix len  Record Format FBlength len\n    -m  | --mod        Dataset disposition mod (append to dataset)\n    -h| --help         this help\n\n  eg.:\n   mfdsutil -u /tmp/x.txt -w -f 132 -t /tmp/ubhi2ku.txt /shared/data/AE022/GRU0.UBHI2KU.DAT\n   reads linux file /tmp/x.txt and writes the data into file /shared/data/AE022/GRU0.UBHI2KU.DAT,\n   which represents dataset GRU0.UBHI2KU with RECFM=FB and LRECL=132.\n\n   mfdsutil -r -f 132 -t /tmp/ubhi2ku.txt /shared/data/AE022/GRU0.UBHI2KU.DAT\n   reads data from microfocus file /shared/data/AE022/GRU0.UBHI2KU.DAT and writes the data to stdout\n\n"
+  },
+  "mfed": {
+    "rc": 1,
+    "out": "usage:\nmfed dsname\nopens Hybrid Editor xe for browsing dataset\nParameters:\n  dsname: dataset name\n\nexample:\nmfed ADIVZ.*\nmfed GRU33.QUELL.CLIST\nmfed ?.prod.variable\nmfed\n"
+  },
+  "mfless": {
+    "rc": 0,
+    "out": "Usage: mfless DATASET\nShow content of microfocus dataset using less.\ne.g.\n  mfless ADIVZ.DRES.VPZJJPA.#140121\n"
+  },
+  "mfrename": {
+    "rc": 1,
+    "out": "\nmfrename <MF-DATASET1> <MF-DATASET2> -h -r\n\n\tDescription:Rename of MF-Datasets\n\n<PARM>    |\tDescription\n----------------------------------------\n-r        |\t (Force) Replace existing Datasets\n\n"
+  },
+  "mfrestore.sh": {
+    "rc": 2,
+    "out": " \nUsage:\nmfrestore.sh [ -n newname -f ] Datasetname MGMTCLASS\n  -n newname\n\t dataset will be created with newname\n  -f dataset will be replaced. If -f is not specified, then the dataset must not exist\n  -d will delete the original file\n  -c Define catalog date in format YYMMDD, YYYYMMDD or YYYY-MM-DD\n  -z don't try to unzip\n  -h this help info\n"
+  },
+  "copy_from_mfds": {
+    "rc": 1,
+    "out": "usage:\ncopy_from_mfds LINUXFILE DATASET_OR_DD [ bin|ascii|iascii] [ TRAIL ]\ncopy content of a microfocus dataset into a linux file\n   LINUXFILE: filename of output file. Use - for stdout\n   DATASET_OR_DD: MF Dataset Name (e.g. 'PDIVZ.DRES.#120115.VPZJJPA') or DD name (e.g. //DD:EBFILE or DD:EBFILE)\n   ascii: add linefeed to each record (default)\n   iascii: invertible ascii - like ascii but ensures that the original dataset can be rebuilt from output file\n           for this  every linefeed within a record is replaced by vertical tab\n           and every vertical tab within a record is replaced by formfeed + vertical tab\n           and every formfeed within a record is replaced by two formfeeds\n   bin: don't add linefeed to each record\n   TRAIL: keep trailing blanks for FB datasets. Only meaningful for ascii/iascii mode.\ne.g.\n    copy_from_mfds /tmp/out POS1.DRES.#120115.VPZJJPA\n    copy_from_mfds /shared/awp/test/temp/satmp/file1.pdf '//DD:ABPDF' bin\n    copy_from_mfds /shared/awp/test/temp/fb.dat GRU0.FB.TEXT ascii trailbl\n    copy_from_mfds - GRU0.FB.TEXT ascii trailbl\n\n"
+  },
+  "copy_to_mfds": {
+    "rc": 1,
+    "out": "usage:\ncopy_to_mfds LINUXFILE DATASET_OR_DD [ ascii|bin|iascii ] [ <RECFM> ] [ <LRECL> ] [ NOREPLACE | \"\" ] [ WRAP | \"\" ] [ TRUN | \"\" ] [MGMTCLASS | \"\" ]\n copy content of a LINUXFILE into a microfocus dataset specified by DATASET_OR_DD\n   LINUXFILE: filename of input file, for stdin use -\n   DATASET_OR_DD MF Dataset Name (e.g. 'PDIVZ.DRES.#120115.VPZJJPA') or DD name (e.g. //DD:EBFILE or DD:EBFILE)\n   ascii: add a record for each text line (default)\n   iascii: same as ascii but recreates embedded linefeeds (see copy_from_mfds -h and mfdsutil -h)\n   bin: don't interpret linefeeds\n   RECFM: record format VB, FB or  LSEQ\n   LRECL: record length\n   NOREPLACE: abort if dataset already exists\n   WRAP: only meaningful in ascii mode - wrap lines which don't fit into a record\n   TRUN: only meaningful in ascii mode - truncate lines which don't fit into a record\ne.g.\n    copy_to_mfds /home/A0566/x.txt ANA2.TEST1.TEXT ascii FB 133\n    copy_to_mfds /home/A0566/x.dat ANA2.TEST1.BIN bin VB 32756 NOREPLACE\n    copy_to_mfds /home/A0566/y.txt ANA2.TEST1.TEXT2 ascii VB 255 \"\" WRAP\n    sort y.txt | copy_to_mfds - ANA2.TEST1.TEXT2 ascii VB 255 NOREPLACE  \"\" TRUN\n\n"
+  },
+  "mfspool": {
+    "rc": 8,
+    "out": "** error : No Parameters Passed\nParameters:  -n = search for Jobnumber\n             -j = search for Jobname (with wildcards)\n             -qx = display only output for specified queue(s), I = Input + Input Hold, D = Dispatch, A= Active, O = Output + Output Hold, P = Print\n             -pnnnnn = search for PID, Active Queue Only\n             -sxxxxxxxx = search for Server Name\n             -d1 = Summary Details for selected jobs\n             -d2 = Full Details for selected jobs\n             -l[h|t]nnn h = head lines, t = tail lines, nnn is the maximum lines for head and/or trail displayed\n"
+  },
+  "sub": {
+    "rc": 9,
+    "out": "usage:\nsub <options> jclfile\nsubmits a job in microfocus enterprise server\njclfile: file containing the jcl for one or more jobs. /shared/adeaga/a0566/awp/cv/mon/cntl/test1.jcl\noptions:\n  -r  resolve control-m statements\n  -s  synchronous submit (wait for job end and return jobrc)\ne.g.\nsub /shared/ae/userlib/ana2/jcl/x.jcl\n"
+  },
+  "mfcancel": {
+    "rc": 1,
+    "out": "usage:\nmfcancel -p JOBNUM ...\ncancels job(s) JOBNUM\njobnum: job number with 1 to 7 digits. Leading zeros not necessary.\noption:\n  -p purge job output\nexample:\nmfcancel 1234567\nmfcancel 2133 70219 00003111\nmfcancel -p 2133 70219 3111\n"
+  },
+  "mfscp": {
+    "rc": 1,
+    "out": "usage:\nmfscp [ -h ] [ -g ] [ -r ] [ -m MGMTCLASS ] [ -l LOCATION] DATASETA SERVER [ DATASETB ]\nsend/receive mf-file from/to server with ssh\nParameters\n  DATASETA: MF-DATASET-NAME\n  SERVER: Name of server \n  DATASETB:  or //DD:DDNAME, DD:DDNAME, Rename DATASETA to DATASETB.\n  options:\n    -h show this help\n    -g get dataset from given server\n    -r replace\n    -m MGMTCLASS\n    -l LOCATION set new LOCATION for DATASETB only available for PO's\n Every Dataset means PO-Dataset aswell (partitioned dataset). DDNAME for PO's are not implemented yet.\n\nexample:\nmfscp GRU0.TEST.XY as-dcor1\nmfscp -r GRU0.TEST.XY as-dcor1 GRU0.TEST2.XY\nmfscp -m L0840035 GRU0.TEST.XY as-dcor1\nmfscp -m L0840035 GRU0.TEST.XY as-dcor1 GRU0.TEST2.XY\n\n"
+  }
+}

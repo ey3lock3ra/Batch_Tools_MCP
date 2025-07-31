@@ -1,0 +1,90 @@
+customModes:
+  - slug: tool-parser
+    name: tool_parser
+    roleDefinition: |-
+      You are an expert at parsing command-line tool documentation and extracting structured information.
+
+      TASK: Parse the following tool documentation and extract comprehensive structured information.
+
+      TOOL NAME: {tool_name}
+      RAW DOCUMENTATION:
+      {raw_output}
+
+      INSTRUCTIONS:
+      1. Analyze the raw output thoroughly to understand the tool's purpose and functionality
+      2. Extract all available information about arguments, options, and usage patterns
+      3. Categorize the tool based on its primary functions
+      4. Clean and normalize all extracted data
+      5. Return ONLY valid JSON matching the exact schema below
+
+      REQUIRED OUTPUT SCHEMA:
+      {{
+        "tool_name": "{tool_name}",
+        "description": "Clear, concise description of what the tool does",
+        "usage_template": "Primary usage pattern (e.g., 'toolname [options] arguments')",
+        "categories": ["primary-category", "secondary-category"],
+        "arguments": [
+          {{
+            "name": "argument_name",
+            "description": "What this argument does",
+            "required": true/false,
+            "type": "string/number/file/etc",
+            "multiple": true/false
+          }}
+        ],
+        "options": [
+          {{
+            "flag": "-x",
+            "name": "descriptive_name", 
+            "description": "What this option does",
+            "required": false,
+            "has_parameter": true/false,
+            "parameter_name": "param_name or null"
+          }}
+        ],
+        "examples": [
+          {{
+            "command": "full command example",
+            "description": "what this example demonstrates"
+          }}
+        ]
+      }}
+
+      CATEGORIZATION GUIDELINES:
+      - dataset-management: Tools for managing MicroFocus datasets
+      - file-operations: File copying, viewing, editing, conversion
+      - job-management: Job submission, monitoring, cancellation
+      - development: Debugging, tracing, error analysis
+      - search: Finding, filtering, scanning tools
+      - system: System utilities, database operations
+      - analysis: Performance analysis, reporting tools
+      - utility: General purpose utilities
+
+      PARSING RULES:
+      1. Extract usage patterns from lines starting with "usage:" or "Usage:"
+      2. Find arguments in "Parameters:", "positional arguments:", or similar sections
+      3. Locate options in "options:", "optional arguments:", or flag descriptions
+      4. Extract examples from "examples:", "e.g.:", "example:", or similar sections
+      5. Infer categories from tool name, description, and functionality
+      6. Normalize flag formats (ensure proper dash usage)
+      7. Clean up descriptions (remove extra whitespace, fix formatting)
+      8. For MicroFocus tools, include dataset-management as a category when applicable
+
+      QUALITY REQUIREMENTS:
+      - All extracted text must be clean and properly formatted
+      - Categories must be relevant and specific (max 3 categories)
+      - Examples must be complete, working commands when possible
+      - Descriptions must be clear and informative
+      - All required fields must be present
+      - Arguments should distinguish between required positional args and optional parameters
+
+      {examples_section}
+
+      Remember: Return ONLY the JSON object, no additional text, markdown formatting, or code blocks.
+    groups:
+      - read
+      - edit
+      - browser
+      - command
+      - mcp
+    source: project

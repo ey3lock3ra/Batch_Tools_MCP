@@ -1,0 +1,2110 @@
+{
+    "dslist": {
+        "tool_name": "dslist",
+        "description": "List datasets matching dataset patterns",
+        "usage_template": "dslist [options] dataset-patterns",
+        "categories": [
+            "dataset-management",
+            "search"
+        ],
+        "arguments": [
+            {
+                "name": "dataset-patterns",
+                "description": "One or more dataset names with or without * as wildcards",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-s",
+                "name": "short_output",
+                "description": "Short output: only dataset names are listed",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-c",
+                "name": "print_list",
+                "description": "Print dataset list (instead of less)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-m",
+                "name": "print_managementclass",
+                "description": "Print managementclass (only with MFCatlst Version >= 2.0)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-z",
+                "name": "zos_search",
+                "description": "Search pattern/result like on z/Os (only with MFCatlst Version >= 2.0)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-f",
+                "name": "print_size_date",
+                "description": "Print size and date (stat -c '%s %y %n')",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "dslist adivz.dr*.vpz*.#20131216 ANA2.XY",
+                "description": "List datasets matching multiple patterns"
+            },
+            {
+                "command": "dslist -s adivz.*.#20131216*",
+                "description": "Short output for datasets matching pattern"
+            },
+            {
+                "command": "dslist ?prod.variable",
+                "description": "List datasets with single character wildcard"
+            }
+        ]
+    },
+    "mfbr": {
+        "tool_name": "mfbr",
+        "description": "Opens Hybrid Editor xe for browsing dataset",
+        "usage_template": "mfbr dsname",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "dsname",
+                "description": "Dataset name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "mfbr ADIVZ.*",
+                "description": "Browse dataset with wildcard"
+            },
+            {
+                "command": "mfbr GRU33.QUELL.CLIST",
+                "description": "Browse specific dataset"
+            },
+            {
+                "command": "mfbr",
+                "description": "Browse without specifying dataset"
+            }
+        ]
+    },
+    "mfcat": {
+        "tool_name": "mfcat",
+        "description": "Concatenate MicroFocus Dataset(s) to standard output",
+        "usage_template": "mfcat [options] Datasets",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "Datasets",
+                "description": "One or more dataset specifications using * as wildcards",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-b",
+                "name": "binary_mode",
+                "description": "Binary mode (don't add linefeed to records)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfcat ADIVZ.DRES.VPZJJPA.#140121 ADIVZ.DRES.VPZJOST.#140121",
+                "description": "Concatenate multiple specific datasets"
+            },
+            {
+                "command": "mfcat 'ADIVZ.DRES.VPZ*.#1401*' 'ADIVZ.DRFEHL.VPZ*.#1401*'",
+                "description": "Concatenate datasets using wildcards"
+            }
+        ]
+    },
+    "mfcopy": {
+        "tool_name": "mfcopy",
+        "description": "Copy Microfocus-Dataset",
+        "usage_template": "mfcopy [options] MF-DATASET1 MF-DATASET2",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "MF-DATASET1",
+                "description": "Source dataset",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "MF-DATASET2",
+                "description": "Target dataset. This will be the new dataset",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-r",
+                "name": "replace_mode",
+                "description": "Replace-Mode when target dataset already exists it will get deleted",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-m",
+                "name": "management_class",
+                "description": "Set the copied dataset with the given New_mgmtclass",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "New_mgmtclass"
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfcopy U7.A0000.TEST U7.A0000.NEWDATA",
+                "description": "Basic dataset copy"
+            },
+            {
+                "command": "mfcopy -r U7.A0000.TEST U7.A0000.NEWDATA",
+                "description": "Copy with replace mode"
+            },
+            {
+                "command": "mfcopy -m L0842600 U7.A0000.TEST U7.A0000.NEWDATA",
+                "description": "Copy with management class assignment"
+            }
+        ]
+    },
+    "mfdelete": {
+        "tool_name": "mfdelete",
+        "description": "Deletes microfocus datasets",
+        "usage_template": "mfdelete [options] dsname-patterns",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "dsname-patterns",
+                "description": "One or more dataset names optionally with wildcards (*)",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-i",
+                "name": "interactive_mode",
+                "description": "Interactive mode - lists datasets and requests confirmation before delete",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfdelete ADIVZ.DRES.VPZJJPA.GESAMT",
+                "description": "Delete specific dataset"
+            },
+            {
+                "command": "mfdelete -i 'ADIZJ.DR*.#120608.* ADIZJ.DR*.#120609.*'",
+                "description": "Interactive delete with wildcards"
+            }
+        ]
+    },
+    "mfdsutil": {
+        "tool_name": "mfdsutil",
+        "description": "Convert data to/from MicroFocus Dataset Format",
+        "usage_template": "mfdsutil [-u unixfilename] [options] mffile",
+        "categories": [
+            "dataset-management",
+            "file-operations",
+            "utility"
+        ],
+        "arguments": [
+            {
+                "name": "mffile",
+                "description": "MicroFocus file to convert",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-u",
+                "name": "unix_filename",
+                "description": "Name of unix file from/to which data are converted",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "unixfilename"
+            },
+            {
+                "flag": "-r",
+                "name": "read_mode",
+                "description": "Read from MicroFocus file and write to unixfile",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-w",
+                "name": "write_mode",
+                "description": "Read from unixfile and write to MicroFocus File",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-b",
+                "name": "binary_mode",
+                "description": "Binary format data is transferred without modification",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-x",
+                "name": "hex_mode",
+                "description": "Hex format - every record is converted into one line containing the data in hex format or vice versa",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-t",
+                "name": "text_mode",
+                "description": "Text format - every record is converted to one line with linefeed or vice versa",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-i",
+                "name": "text_invertible",
+                "description": "Invertible text format, ensures that the original MicroFocus dataset can be rebuilt",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-l",
+                "name": "length_prefixed",
+                "description": "Length delimited - every record is converted to a length+data sequence or vice versa",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-z",
+                "name": "zos_undefined",
+                "description": "Like --lengthpref, but with additional block descriptor word",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-k",
+                "name": "keep_trailing_blanks",
+                "description": "Keep trailing blanks when converting fixed blocked datasets (only with -r)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-c",
+                "name": "truncate_lines",
+                "description": "Truncate lines which exceed record length (only with -w)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-a",
+                "name": "wrap_around",
+                "description": "Wrap around lines which exceed record length (only with -w)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "variable_format",
+                "description": "Record Format VB with record length",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "len"
+            },
+            {
+                "flag": "-f",
+                "name": "fixed_format",
+                "description": "Record Format FB with length",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "len"
+            },
+            {
+                "flag": "-m",
+                "name": "modify_mode",
+                "description": "Dataset disposition mod (append to dataset)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show help information",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfdsutil -u /tmp/x.txt -w -f 132 -t /tmp/ubhi2ku.txt /shared/data/AE022/GRU0.UBHI2KU.DAT",
+                "description": "Read linux file and write to MicroFocus dataset with FB format"
+            },
+            {
+                "command": "mfdsutil -r -f 132 -t /tmp/ubhi2ku.txt /shared/data/AE022/GRU0.UBHI2KU.DAT",
+                "description": "Read from microfocus file and write to stdout"
+            }
+        ]
+    },
+    "mfed": {
+        "tool_name": "mfed",
+        "description": "Opens Hybrid Editor xe for editing dataset",
+        "usage_template": "mfed dsname",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "dsname",
+                "description": "Dataset name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "mfed ADIVZ.*",
+                "description": "Edit dataset with wildcard"
+            },
+            {
+                "command": "mfed GRU33.QUELL.CLIST",
+                "description": "Edit specific dataset"
+            },
+            {
+                "command": "mfed ?.prod.variable",
+                "description": "Edit dataset with single character wildcard"
+            },
+            {
+                "command": "mfed",
+                "description": "Launch editor without specifying dataset"
+            }
+        ]
+    },
+    "mfless": {
+        "tool_name": "mfless",
+        "description": "Show content of microfocus dataset using less",
+        "usage_template": "mfless DATASET",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "DATASET",
+                "description": "MicroFocus dataset to view",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "mfless ADIVZ.DRES.VPZJJPA.#140121",
+                "description": "View dataset content using less"
+            }
+        ]
+    },
+    "mfrename": {
+        "tool_name": "mfrename",
+        "description": "Rename MF-Datasets",
+        "usage_template": "mfrename MF-DATASET1 MF-DATASET2 [options]",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "MF-DATASET1",
+                "description": "Source dataset name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "MF-DATASET2",
+                "description": "Target dataset name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-r",
+                "name": "force_replace",
+                "description": "(Force) Replace existing Datasets",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show help information",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "mfrestore.sh": {
+        "tool_name": "mfrestore.sh",
+        "description": "Restore MicroFocus dataset from backup",
+        "usage_template": "mfrestore.sh [options] Datasetname MGMTCLASS",
+        "categories": [
+            "dataset-management",
+            "system"
+        ],
+        "arguments": [
+            {
+                "name": "Datasetname",
+                "description": "Name of dataset to restore",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "MGMTCLASS",
+                "description": "Management class for the dataset",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-n",
+                "name": "new_name",
+                "description": "Dataset will be created with newname",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "newname"
+            },
+            {
+                "flag": "-f",
+                "name": "force_replace",
+                "description": "Dataset will be replaced. If -f is not specified, then the dataset must not exist",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-d",
+                "name": "delete_original",
+                "description": "Will delete the original file",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-c",
+                "name": "catalog_date",
+                "description": "Define catalog date in format YYMMDD, YYYYMMDD or YYYY-MM-DD",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "date"
+            },
+            {
+                "flag": "-z",
+                "name": "no_unzip",
+                "description": "Don't try to unzip",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show help information",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "copy_from_mfds": {
+        "tool_name": "copy_from_mfds",
+        "description": "Copy content of a microfocus dataset into a linux file",
+        "usage_template": "copy_from_mfds LINUXFILE DATASET_OR_DD [format] [TRAIL]",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "LINUXFILE",
+                "description": "Filename of output file. Use - for stdout",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            },
+            {
+                "name": "DATASET_OR_DD",
+                "description": "MF Dataset Name or DD name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "format",
+                "description": "Data format: ascii (default), iascii (invertible ascii), or bin (binary)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "TRAIL",
+                "description": "Keep trailing blanks for FB datasets. Only meaningful for ascii/iascii mode",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "copy_from_mfds /tmp/out POS1.DRES.#120115.VPZJJPA",
+                "description": "Copy dataset to linux file with default ascii format"
+            },
+            {
+                "command": "copy_from_mfds /shared/awp/test/temp/satmp/file1.pdf '//DD:ABPDF' bin",
+                "description": "Copy DD reference to file in binary format"
+            },
+            {
+                "command": "copy_from_mfds /shared/awp/test/temp/fb.dat GRU0.FB.TEXT ascii trailbl",
+                "description": "Copy dataset with trailing blanks preserved"
+            },
+            {
+                "command": "copy_from_mfds - GRU0.FB.TEXT ascii trailbl",
+                "description": "Copy dataset to stdout with trailing blanks"
+            }
+        ]
+    },
+    "copy_to_mfds": {
+        "tool_name": "copy_to_mfds",
+        "description": "Copy content of a LINUXFILE into a microfocus dataset",
+        "usage_template": "copy_to_mfds LINUXFILE DATASET_OR_DD [format] [RECFM] [LRECL] [options]",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "LINUXFILE",
+                "description": "Filename of input file, for stdin use -",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            },
+            {
+                "name": "DATASET_OR_DD",
+                "description": "MF Dataset Name or DD name",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "format",
+                "description": "Data format: ascii (default), iascii, or bin",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "RECFM",
+                "description": "Record format: VB, FB or LSEQ",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "LRECL",
+                "description": "Record length",
+                "required": false,
+                "type": "number",
+                "multiple": false
+            },
+            {
+                "name": "NOREPLACE",
+                "description": "Abort if dataset already exists",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "WRAP",
+                "description": "Wrap lines which don't fit into a record (ascii mode only)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "TRUN",
+                "description": "Truncate lines which don't fit into a record (ascii mode only)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "MGMTCLASS",
+                "description": "Management class for the dataset",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "copy_to_mfds /home/A0566/x.txt ANA2.TEST1.TEXT ascii FB 133",
+                "description": "Copy text file to dataset with FB format"
+            },
+            {
+                "command": "copy_to_mfds /home/A0566/x.dat ANA2.TEST1.BIN bin VB 32756 NOREPLACE",
+                "description": "Copy binary file to VB dataset, abort if exists"
+            },
+            {
+                "command": "copy_to_mfds /home/A0566/y.txt ANA2.TEST1.TEXT2 ascii VB 255 \"\" WRAP",
+                "description": "Copy text file with line wrapping"
+            },
+            {
+                "command": "sort y.txt | copy_to_mfds - ANA2.TEST1.TEXT2 ascii VB 255 NOREPLACE \"\" TRUN",
+                "description": "Pipe sorted data to dataset with truncation"
+            }
+        ]
+    },
+    "mfspool": {
+        "tool_name": "mfspool",
+        "description": "Search and display job information in MicroFocus spool",
+        "usage_template": "mfspool [options]",
+        "categories": [
+            "job-management",
+            "search"
+        ],
+        "arguments": [],
+        "options": [
+            {
+                "flag": "-n",
+                "name": "search_jobnumber",
+                "description": "Search for Jobnumber",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "jobnumber"
+            },
+            {
+                "flag": "-j",
+                "name": "search_jobname",
+                "description": "Search for Jobname (with wildcards)",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "jobname"
+            },
+            {
+                "flag": "-q",
+                "name": "queue_filter",
+                "description": "Display only output for specified queue(s): I=Input+Input Hold, D=Dispatch, A=Active, O=Output+Output Hold, P=Print",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "queue_types"
+            },
+            {
+                "flag": "-p",
+                "name": "search_pid",
+                "description": "Search for PID, Active Queue Only",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "pid"
+            },
+            {
+                "flag": "-s",
+                "name": "search_server",
+                "description": "Search for Server Name",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "server_name"
+            },
+            {
+                "flag": "-d1",
+                "name": "summary_details",
+                "description": "Summary Details for selected jobs",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-d2",
+                "name": "full_details",
+                "description": "Full Details for selected jobs",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-l",
+                "name": "line_limit",
+                "description": "Head/tail lines: h=head lines, t=tail lines, nnn is the maximum lines displayed",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "line_spec"
+            }
+        ],
+        "examples": []
+    },
+    "sub": {
+        "tool_name": "sub",
+        "description": "Submits a job in microfocus enterprise server",
+        "usage_template": "sub [options] jclfile",
+        "categories": [
+            "job-management"
+        ],
+        "arguments": [
+            {
+                "name": "jclfile",
+                "description": "File containing the jcl for one or more jobs",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-r",
+                "name": "resolve_controlm",
+                "description": "Resolve control-m statements",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-s",
+                "name": "synchronous_submit",
+                "description": "Synchronous submit (wait for job end and return jobrc)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "sub /shared/ae/userlib/ana2/jcl/x.jcl",
+                "description": "Submit JCL job file"
+            }
+        ]
+    },
+    "mfcancel": {
+        "tool_name": "mfcancel",
+        "description": "Cancels job(s) by job number",
+        "usage_template": "mfcancel [options] JOBNUM...",
+        "categories": [
+            "job-management"
+        ],
+        "arguments": [
+            {
+                "name": "JOBNUM",
+                "description": "Job number with 1 to 7 digits. Leading zeros not necessary",
+                "required": true,
+                "type": "number",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-p",
+                "name": "purge_output",
+                "description": "Purge job output",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfcancel 1234567",
+                "description": "Cancel single job"
+            },
+            {
+                "command": "mfcancel 2133 70219 00003111",
+                "description": "Cancel multiple jobs"
+            },
+            {
+                "command": "mfcancel -p 2133 70219 3111",
+                "description": "Cancel multiple jobs and purge output"
+            }
+        ]
+    },
+    "mfscp": {
+        "tool_name": "mfscp",
+        "description": "Send/receive mf-file from/to server with ssh",
+        "usage_template": "mfscp [options] DATASETA SERVER [DATASETB]",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "DATASETA",
+                "description": "MF-DATASET-NAME",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "SERVER",
+                "description": "Name of server",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "DATASETB",
+                "description": "Target dataset name or //DD:DDNAME, DD:DDNAME. Rename DATASETA to DATASETB",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show help information",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-g",
+                "name": "get_dataset",
+                "description": "Get dataset from given server",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-r",
+                "name": "replace",
+                "description": "Replace existing dataset",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-m",
+                "name": "management_class",
+                "description": "Set management class for dataset",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "MGMTCLASS"
+            },
+            {
+                "flag": "-l",
+                "name": "location",
+                "description": "Set new LOCATION for DATASETB only available for PO's",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "LOCATION"
+            }
+        ],
+        "examples": [
+            {
+                "command": "mfscp GRU0.TEST.XY as-dcor1",
+                "description": "Send dataset to server"
+            },
+            {
+                "command": "mfscp -r GRU0.TEST.XY as-dcor1 GRU0.TEST2.XY",
+                "description": "Send dataset with replace and rename"
+            },
+            {
+                "command": "mfscp -m L0840035 GRU0.TEST.XY as-dcor1",
+                "description": "Send dataset with management class"
+            },
+            {
+                "command": "mfscp -m L0840035 GRU0.TEST.XY as-dcor1 GRU0.TEST2.XY",
+                "description": "Send dataset with management class and rename"
+            }
+        ]
+    },
+    "bindrep": {
+        "tool_name": "bindrep",
+        "description": "Performs DB2 bind for databases assigned in configuration files",
+        "usage_template": "asc_bindrep [options] [tosca-env/stage] [dbname]",
+        "categories": [
+            "dataset-management",
+            "system"
+        ],
+        "arguments": [
+            {
+                "name": "tosca-env/stage",
+                "description": "Target environment or stage for binding",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "dbname",
+                "description": "Specific database name to bind",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Specify version (default v210)",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "version"
+            },
+            {
+                "flag": "-g",
+                "name": "check_ggrl",
+                "description": "For Customers: also check GGRL-Stored-Procedures - in ccc always checked",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-f",
+                "name": "force_bind",
+                "description": "Force bind",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-s",
+                "name": "stored_procedures_only",
+                "description": "Only check stored procedures",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-t",
+                "name": "activate_trace",
+                "description": "Activate Trace",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "asc_bindrep f",
+                "description": "bind databases assigned to V210_FACHTEST_DB"
+            },
+            {
+                "command": "asc_bindrep -v v155 p",
+                "description": "bind databases assigned to V155_PROD_DB"
+            },
+            {
+                "command": "asc_bindrep i DTCOR01",
+                "description": "bind DTCOR01 if assigned to V210_INTTEST_DB"
+            },
+            {
+                "command": "asc_bindrep extv3",
+                "description": "bind all TOSCSA-extv3-assigned databases"
+            },
+            {
+                "command": "asc_bindrep -s -v v240",
+                "description": "check all stored-procedures for databases assigned to V240"
+            }
+        ]
+    },
+    "xesim": {
+        "tool_name": "xesim",
+        "description": "Resolves input JCL and shows it in xe",
+        "usage_template": "xesim <input-jcl> [<odate>]",
+        "categories": [
+            "job-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "input-jcl",
+                "description": "Input JCL file path",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            },
+            {
+                "name": "odate",
+                "description": "Optional date parameter",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "xesim /home/varresolve/VOTOVG.jcl",
+                "description": "resolve JCL file without date"
+            },
+            {
+                "command": "xesim /home/varresolve/VOTOVG.jcl 160523",
+                "description": "resolve JCL file with specific date"
+            }
+        ]
+    },
+    "uedit": {
+        "tool_name": "uedit",
+        "description": "Edit datasets for MicroFocus and LX datasets",
+        "usage_template": "uedit [options] dataset",
+        "categories": [
+            "dataset-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "dataset",
+                "description": "Dataset name or path to edit",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show brief help",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "--help",
+                "name": "help",
+                "description": "Show brief help",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-i",
+                "name": "ip",
+                "description": "For host call with IP",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "--ip",
+                "name": "ip",
+                "description": "For host call with IP",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "uedit /shared/data/COR/COR0.BATE.UEBERW.ENDREF.DAT",
+                "description": "edit single MF-DATASET file"
+            },
+            {
+                "command": "uedit COR0.BATE.UEBERW.ENDREF",
+                "description": "edit single MF-DATASET"
+            },
+            {
+                "command": "uedit COR0.B*.UEBERW.ENDREF",
+                "description": "edit all MF-DATASETS matching pattern"
+            },
+            {
+                "command": "uedit /shared/ae/userlib/ps99/jcl/",
+                "description": "edit all files in LX-DATASET directory"
+            },
+            {
+                "command": "uedit /shared/ae/userlib/ps99/jcl/TEST+",
+                "description": "edit all LX-DATASET files starting with TEST"
+            },
+            {
+                "command": "uedit /shared/ae/userlib/ps99/jcl/TEST5.jcl",
+                "description": "edit specific LX-DATASET file"
+            }
+        ]
+    },
+    "scanError": {
+        "tool_name": "scanError",
+        "description": "Scan and analyze error datasets",
+        "usage_template": "scanError [options] DSNAME [tracefile]",
+        "categories": [
+            "analysis",
+            "search"
+        ],
+        "arguments": [
+            {
+                "name": "DSNAME",
+                "description": "Dataset name pattern to scan for errors",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "tracefile",
+                "description": "Optional trace file parameter",
+                "required": false,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-e",
+                "name": "extended_output",
+                "description": "Extended output having additional columns: HLQ, Date, etc.",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-H",
+                "name": "no_csv_header",
+                "description": "No CSV header record",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-S",
+                "name": "no_progress_status",
+                "description": "No progress Status",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "scanError E1DIZJ.DRFEHL.*.#190502",
+                "description": "scan error dataset with date pattern"
+            },
+            {
+                "command": "scanError -e E1DIZJ.DRFEHL.*.#190502 > E1_scanError190502_all.csv",
+                "description": "scan with extended output and redirect to CSV file"
+            }
+        ]
+    },
+    "diffError.sh": {
+        "tool_name": "diffError.sh",
+        "description": "Compare error files and show differences",
+        "usage_template": "diffError.sh [options] oldfile newfile",
+        "categories": [
+            "analysis",
+            "utility"
+        ],
+        "arguments": [
+            {
+                "name": "oldfile",
+                "description": "Old error file for comparison",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            },
+            {
+                "name": "newfile",
+                "description": "New error file for comparison",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-e",
+                "name": "show_equal_errors",
+                "description": "Show equal errors",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-n",
+                "name": "show_new_errors",
+                "description": "Show new errors (default)",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-o",
+                "name": "show_old_errors",
+                "description": "Show old errors",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "diffError E1_scanError190507.csv E1_scanError190508.csv",
+                "description": "compare two error scan CSV files"
+            }
+        ]
+    },
+    "espa": {
+        "tool_name": "espa",
+        "description": "Performance analysis tool for programs and databases",
+        "usage_template": "espa [-h] [-e [ENVIRON]] [-d date-filter] [-qs] [-l [limit]] [various options] qualifiers [databases]",
+        "categories": [
+            "analysis",
+            "system"
+        ],
+        "arguments": [
+            {
+                "name": "qualifiers",
+                "description": "Name of program, used for identifying dres files via third qualifier",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "databases",
+                "description": "Databases (triple-digit) comma separated or 'all'",
+                "required": false,
+                "type": "string",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-e",
+                "name": "environ",
+                "description": "Environment specification (test, test1-4, prod)",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "ENVIRON"
+            },
+            {
+                "flag": "-d",
+                "name": "date",
+                "description": "Filter criterion for logical date",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "date-filter"
+            },
+            {
+                "flag": "-qs",
+                "name": "qualified_strict",
+                "description": "Only the qualifiers from the first positional arguments have to exist",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-l",
+                "name": "limit",
+                "description": "Number of parsed/displayed records",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "limit"
+            },
+            {
+                "flag": "-f",
+                "name": "fields_output",
+                "description": "Parsed fields to be included in output stream",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "fields"
+            },
+            {
+                "flag": "-t",
+                "name": "totals_fields",
+                "description": "Print data based on indices of totals fields",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "totals_type"
+            },
+            {
+                "flag": "-p",
+                "name": "printlog",
+                "description": "Print log records",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "dj": {
+        "tool_name": "dj",
+        "description": "Resolve job, browse or edit job",
+        "usage_template": "dj [-h] [-v] jobname [action]",
+        "categories": [
+            "job-management",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "jobname",
+                "description": "Name of job to be displayed",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "action",
+                "description": "Action to be taken: date (YYMMDD), days (1-7), b (browse), e (edit with mfed), v (edit with vi)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "dj EPOTL1DS",
+                "description": "resolve with current date"
+            },
+            {
+                "command": "dj EPOTL1DS 210103",
+                "description": "resolve with specific date"
+            },
+            {
+                "command": "dj EPOTL1DS b",
+                "description": "browse unresolved job"
+            },
+            {
+                "command": "dj EPOTL1DS e",
+                "description": "edit unresolved job with mfed"
+            },
+            {
+                "command": "dj EPOTL1DS v",
+                "description": "edit unresolved job with vi"
+            }
+        ]
+    },
+    "dt": {
+        "tool_name": "dt",
+        "description": "Quick way to display tenant information from TENANTS.var",
+        "usage_template": "dt [-h] [-e [ENVIRON]] [-res] [-det] [-v] [searchstring]",
+        "categories": [
+            "search",
+            "system"
+        ],
+        "arguments": [
+            {
+                "name": "searchstring",
+                "description": "Search string for tenant (all, 2-digit numeric, 2-digit alphabetic, or arbitrary string)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-e",
+                "name": "environ",
+                "description": "Environment specification (prod or test<env-number>)",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "ENVIRON"
+            },
+            {
+                "flag": "-res",
+                "name": "reserve",
+                "description": "Show reserve",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-det",
+                "name": "details",
+                "description": "Show details",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "dt",
+                "description": "display all tenants (default)"
+            },
+            {
+                "command": "dt all",
+                "description": "display all tenants"
+            },
+            {
+                "command": "dt 1",
+                "description": "display numeric tenant"
+            },
+            {
+                "command": "dt as -det",
+                "description": "display additional fields"
+            },
+            {
+                "command": "dt de -res",
+                "description": "display reserve lines"
+            },
+            {
+                "command": "dt oe",
+                "description": "display normalized tenant"
+            },
+            {
+                "command": "dt spain",
+                "description": "display tenant via arbitrary search string"
+            }
+        ]
+    },
+    "xtrans": {
+        "tool_name": "xtrans",
+        "description": "Extract sections from transaction files containing search criteria",
+        "usage_template": "xtrans [-h] [-e [ENVIRON]] [-scan] [-both] [-fne [FNAME_EXT]] [-alsep] [-l LIMIT] [-mha | -mga] [-v] searchstrings dates [tenant]",
+        "categories": [
+            "search",
+            "file-operations"
+        ],
+        "arguments": [
+            {
+                "name": "searchstrings",
+                "description": "Search strings to look for, separated by comma or hash",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            },
+            {
+                "name": "dates",
+                "description": "Date in format YYMMDD for daily files or YYMM for monthly files",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "tenant",
+                "description": "Tenant triple digit, default tenant is mha",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-e",
+                "name": "environ",
+                "description": "Environment specification",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "ENVIRON"
+            },
+            {
+                "flag": "-scan",
+                "name": "scan_mode",
+                "description": "Scan mode, no extraction, only search is done",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-both",
+                "name": "show_compressed",
+                "description": "Show compressed files in addition when printing existing files",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-fne",
+                "name": "filename_extension",
+                "description": "Add to filename, if not specified add timestamp",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "FNAME_EXT"
+            },
+            {
+                "flag": "-alsep",
+                "name": "alternate_separator",
+                "description": "Alternative separator hash to use for search criteria",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-l",
+                "name": "limit",
+                "description": "Number of transactions to be extracted",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "LIMIT"
+            },
+            {
+                "flag": "-mha",
+                "name": "tenant_mha",
+                "description": "Specify tenant mha for file display without positional arguments",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-mga",
+                "name": "tenant_mga",
+                "description": "Specify tenant mga for file display without positional arguments",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "xtrans 7572d4e5-9e40-11ef-b241-7a1e11530eb9 241109 mha",
+                "description": "extract all transactions containing uuid from DAILY FILE 241109"
+            },
+            {
+                "command": "xtrans 16db25e4-9d75-11ef-9c1f-fe24e6e78f99 241108 mha -e3",
+                "description": "extract all transactions containing uuid from daily file 241108 IN TEST"
+            },
+            {
+                "command": "xtrans 900951b5-9b0b-11ef-90c7-f27ec5e2afac,ae2fb899-9d67-11ef-85c1-967a32033aa5 241104,241105-241107,241108 mga",
+                "description": "extract data from MULTIPLE DAILY FILES with MULTIPLE SEARCH ARGUMENTS"
+            },
+            {
+                "command": "xtrans 0b464c38-829c-11ef-8580-f6e0ca4e0b93 2410,2,4-6,10 mga",
+                "description": "extract data from MULTIPLE DAYS OF MONTHLY FILE"
+            }
+        ]
+    },
+    "xtrace": {
+        "tool_name": "xtrace",
+        "description": "Extract sections from trace file containing search criteria with gzip decompression support",
+        "usage_template": "xtrace [-h] [-split] [-fne [FNAME_EXT]] [-l LIMIT] [-keep] [-v] filename searchstrings",
+        "categories": [
+            "search",
+            "development"
+        ],
+        "arguments": [
+            {
+                "name": "filename",
+                "description": "MicroFocus file name",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            },
+            {
+                "name": "searchstrings",
+                "description": "Search strings comma separated, case insensitive",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-split",
+                "name": "split_sections",
+                "description": "Write sections in separate files",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-fne",
+                "name": "filename_extension",
+                "description": "Add to filename, if not specified add searchstring",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "FNAME_EXT"
+            },
+            {
+                "flag": "-l",
+                "name": "limit",
+                "description": "Maximum number of parsed sections",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "LIMIT"
+            },
+            {
+                "flag": "-keep",
+                "name": "keep_files",
+                "description": "Do not delete old files",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "xtrace EDIVZ.DRTRACE.VPZJOWP.#210101 85050d6d-4c80-11eb-a882-005056b26c52",
+                "description": "extract sections from trace file with current date format"
+            },
+            {
+                "command": "xtrace EDIVZ.DRTRACE.VPZJOWP.Z201231 85050d6d-4c80-11eb-a882-005056b26c52",
+                "description": "extract sections from compressed trace file"
+            },
+            {
+                "command": "xtrace <mffilename> <searchstring> -split",
+                "description": "extract sections and write to separate files"
+            }
+        ]
+    },
+    "xspool": {
+        "tool_name": "xspool",
+        "description": "Extract and search job sections from spool backup files",
+        "usage_template": "xspool [-h] [-search] [-cs] [-keep] [-v] jobnames/searchcrit date",
+        "categories": [
+            "search",
+            "job-management"
+        ],
+        "arguments": [
+            {
+                "name": "jobnames/searchcrit",
+                "description": "Search criterium: jobname or jobnames comma separated, or arbitrary string with -search option",
+                "required": true,
+                "type": "string",
+                "multiple": true
+            },
+            {
+                "name": "date",
+                "description": "Date in format YYMMDD for identifying spool backup file",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-search",
+                "name": "search_mode",
+                "description": "Search mode, do not extract but display found job sections",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-cs",
+                "name": "case_sensitive",
+                "description": "Search case sensitive",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-keep",
+                "name": "keep_files",
+                "description": "Do not delete old files",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "fp": {
+        "tool_name": "fp",
+        "description": "Search in PL1 programs or includes with regular expression for matching statements",
+        "usage_template": "fp [-h] [-v] [various options] search_crit [module_filter]",
+        "categories": [
+            "search",
+            "development"
+        ],
+        "arguments": [
+            {
+                "name": "search_crit",
+                "description": "Search criterium, for regex single or double quotes needed if special characters or blanks used",
+                "required": true,
+                "type": "string",
+                "multiple": false
+            },
+            {
+                "name": "module_filter",
+                "description": "Module name filter criteria (glob pattern or comma separated list)",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-b",
+                "name": "branch",
+                "description": "Branch to search for, default is 230",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "branch"
+            },
+            {
+                "flag": "-s",
+                "name": "stage",
+                "description": "Stage to search for, default is prod",
+                "required": false,
+                "has_parameter": true,
+                "parameter_name": "stage"
+            },
+            {
+                "flag": "-inc",
+                "name": "include_search",
+                "description": "Search includes",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-unl",
+                "name": "unload_search",
+                "description": "Search unloads",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-both",
+                "name": "search_both",
+                "description": "Search also core modules if customer specific exists",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-comm",
+                "name": "search_comments",
+                "description": "Search also comments",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-cs",
+                "name": "case_sensitive",
+                "description": "Search case sensitive",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-det",
+                "name": "show_details",
+                "description": "Show found statement_buf",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-lit",
+                "name": "literally",
+                "description": "Search as literal, not regex",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-nc",
+                "name": "no_color",
+                "description": "Do not color output",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": [
+            {
+                "command": "fp .mo1_lberperssach -b 210 -s vorprod",
+                "description": "search in specific environment"
+            },
+            {
+                "command": "fp lberperssach -inc -comm",
+                "description": "find all includes related to beneficiary table, also in comments"
+            },
+            {
+                "command": "fp KZTEST sch -cs",
+                "description": "find in claims modules case sensitive"
+            },
+            {
+                "command": "fp \"insert\\s+into\\s+.hbschnittstelle\"",
+                "description": "find all insert statements for thbschnitsstelle"
+            },
+            {
+                "command": "fp \"call\\s+ubhqmsa\" -det",
+                "description": "find call_ctr on ubhqmsa with detailed statement_buf"
+            },
+            {
+                "command": "fp 'slana' ubh",
+                "description": "find domain value in finance modules"
+            },
+            {
+                "command": "fp pligen -comm -cosmo",
+                "description": "print all pligen modules to use result as a module-filter"
+            }
+        ]
+    },
+    "my_release_changes": {
+        "tool_name": "my_release_changes",
+        "description": "Check own release changes not yet in production",
+        "usage_template": "my_release_changes [-h] [-v] [release]",
+        "categories": [
+            "development",
+            "analysis"
+        ],
+        "arguments": [
+            {
+                "name": "release",
+                "description": "Release to be checked, e.g. 23.A or 23.A.1",
+                "required": false,
+                "type": "string",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "cfm": {
+        "tool_name": "cfm",
+        "description": "Copy file from mfds to predefined folder",
+        "usage_template": "cfm [-h] [-trail] [-v] mffile",
+        "categories": [
+            "file-operations",
+            "dataset-management"
+        ],
+        "arguments": [
+            {
+                "name": "mffile",
+                "description": "MicroFocus file name to be copied",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [
+            {
+                "flag": "-h",
+                "name": "help",
+                "description": "Show this help message and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-trail",
+                "name": "preserve_trailing_blanks",
+                "description": "Preserve trailing blanks when copying",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            },
+            {
+                "flag": "-v",
+                "name": "version",
+                "description": "Show program's version number and exit",
+                "required": false,
+                "has_parameter": false,
+                "parameter_name": null
+            }
+        ],
+        "examples": []
+    },
+    "taildrst": {
+        "tool_name": "taildrst",
+        "description": "Monitor DRST files for PL/I programs/tasks",
+        "usage_template": "taildrst <fully_qualified_path_to_*DRST.DAT_file>",
+        "categories": [
+            "development",
+            "system"
+        ],
+        "arguments": [
+            {
+                "name": "fully_qualified_path_to_DRST_file",
+                "description": "Full path to DRST.DAT file to monitor",
+                "required": true,
+                "type": "file",
+                "multiple": false
+            }
+        ],
+        "options": [],
+        "examples": [
+            {
+                "command": "taildrst /shared/awp/prod/spool/MHAN/Y2021.S0318.S010126.J0089519.D00006.DRST.DAT",
+                "description": "monitor specific DRST file for PL/I program traces"
+            }
+        ]
+    }
+}
